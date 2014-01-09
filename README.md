@@ -2,9 +2,9 @@
 
 ## Install
 
-- Install apache2 -> restart it
+- Install `apache2` -> restart it
 
-- Install php5
+- Install `php5 libapache2-mod-php5 php5-mcrypt php5-mysql`
 
 - Instapp mysql `mysql-server libapache2-mod-auth-mysql php5-mysql`
 
@@ -28,7 +28,11 @@
 
 - Optional: Increase php5 `memory_limit`
 
-- Set up mysql root password `mysqladmin -u root -p password yourpassword` `SET PASSWORD FOR 'root'@'localhost' = PASSWORD('yourpassword');`
+- Set up mysql root password
+
+`mysqladmin -u root -p password yourpassword`
+
+`SET PASSWORD FOR 'root'@'localhost' = PASSWORD('yourpassword');`
 
 - Copy phpmyadmin config file
 
