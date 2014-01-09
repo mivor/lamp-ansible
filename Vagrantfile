@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "http://files.vagrantup.com/precise32.box"
 
   config.vm.hostname = "post"
-  config.vm.provision :shell, :path => "provision.sh", :keep_color => true
+  config.vm.provision :shell, :path => "provision/provision.sh", :keep_color => true
   config.vm.network :private_network, ip: "192.168.200.22"
   config.vm.synced_folder ".", "/vagrant", :group => "www-data", :mount_options => ["dmode=755","fmode=644"]
 
