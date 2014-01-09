@@ -6,6 +6,10 @@
 
 - Install php5
 
+- Instapp mysql `mysql-server libapache2-mod-auth-mysql php5-mysql`
+
+- Install phpmyadmin
+
 ## Config
 
 - Add `ServerName localhost` -> /etc/apache2/apache2.conf && /etc/apache2/conf.d/fqdn
@@ -21,5 +25,19 @@
 `sudo mv /etc/php5/apache2/php.ini /etc/php5/apache2/php.ini.bak`
 
 `sudo cp -s /usr/share/php5/php.ini-development /etc/php5/apache2/php.ini`
+
+- Optional: Increase php5 `memory_limit`
+
+- Set up mysql root password `mysqladmin -u root -p password yourpassword` `SET PASSWORD FOR 'root'@'localhost' = PASSWORD('yourpassword');`
+
+- Copy phpmyadmin config file
+
+```PHP
+/* Server parameters */
+$cfg['Servers'][1]['auth_type'] = 'config';
+$cfg['Servers'][1]['user'] = 'root';
+$cfg['Servers'][1]['password'] = 'root';
+$cfg['Servers'][1]['host'] = 'localhost';
+```
 
 
