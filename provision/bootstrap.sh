@@ -84,8 +84,10 @@ list_finished() { # list_name
 main() {
     get_machine_name
     if [[ $(type ansible 2>/dev/null) ]]; then
-        logger 'm' "Running provisioner: ansible" provision_ansible
+        # logger 'm' "Running provisioner: ansible" provision_ansible
     else
+        logger 'Fixing tty bug' fix_tty
+        logger 'Setting color prompt' set_ps
         logger 'm' "Installing ansible" install_ansible
     fi
     # logger "Setting PS" set_ps
