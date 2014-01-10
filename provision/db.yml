@@ -2,7 +2,7 @@
 - name: deploy and configure mysql
   hosts: db
   sudo: yes
-  gather_facts: false
+  gather_facts: yes
   roles:
     - common
     - db
