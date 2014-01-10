@@ -4,8 +4,11 @@
   sudo: yes
   gather_facts: false
   tasks:
-    - name: colorize prompt
+    - name: enable color prompt
       lineinfile: dest=/home/vagrant/.bashrc regexp='#force_color_prompt(.*)$' line='force_color_prompt\1' backrefs=yes
+
+    # - name: set color prompt
+    #   lineinfile: "dest=/home/vagrant/.bashrc regexp='\\u@\\h\\' line='    PS1=\'\[\033[36m\]\u\[\033[00m\]:\[\033[33m\]\w\[\033[00m\]\$ \'' backrefs=yes"
 
     - name: update distro
       apt: upgrade=dist update_cache=true cache_valid_time=3600
@@ -30,14 +33,36 @@
     - name: ensure apache2 is running
       service: name=apache2 state=started
 
-    - name: set mysql root password
-      mysql_user: name=root password=root
+    - name: copy virtualhost file
+      copy: src=/vagrant/provision/virtualhost dest=/etc/apache2/sites-enabled/dev
+      notify:
+        - restart apache2
+
+    - name: disable default site
+      file: path=/etc/apache2/sites-enabled/000-default state=absent
+      notify:
+        - restart apache2
+
+    - name: copy php5 development conf
+      copy: src=/usr/share/doc/php5-common/examples/php.ini-development dest=/etc/php5/apache2/php.ini
+
+    - name: copy mysql conf
+      copy: src=/vagrant/provision/mysql.cnf dest=~/.my.cnf
+
+    # - name: set mysql root password
+    #   mysql_user: name=root password=root
 
     - name: create posticum database
-      mysql_db: login_user=root login_password=root name=posticum
+      mysql_db: name=posticum
 
     - name: create posticum user
-      mysql_user: login_user=root login_password=root name=post password=dev priv=posticum.*:ALL
+      mysql_user: name=post password=dev priv=posticum.*:ALL
+
+    - name: simlink phpmyadmin conf
+      file: src=/etc/phpmyadmin/apache.conf dest=/etc/apache2/conf.d/phpmyadmin state=link
+
+    - name: copy phpmyadmin config
+      copy: src=/vagrant/provision/phpmyadmin.conf dest=/etc/phpmyadmin/config.inc.php
 
   handlers:
     - name: restart apache2
