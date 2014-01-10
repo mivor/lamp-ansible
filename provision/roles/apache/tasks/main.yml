@@ -20,7 +20,7 @@
     - restart apache2
 
 - name: disable default site
-  file: path=/etc/apache2/sites-enabled/default state=absent
+  file: path=/etc/apache2/sites-enabled/000-default state=absent
   notify:
     - restart apache2
 

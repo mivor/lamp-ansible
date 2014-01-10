@@ -2,25 +2,39 @@
 - name: ensure apache2 is at latest version
   apt: pkg={{ item }} state=latest update_cache=true cache_valid_time=3600
   with_items:
-    - apache2
-    - php5
-    - libapache2-mod-php5
     - mysql-server
     - libapache2-mod-auth-mysql
     - php5-mysql
     - phpmyadmin
     - python-mysqldb
 
-- name: set mysql root password
-  mysql_user: name=root password=root
+- name: ensure mysql is started
+  service: name=mysql state=started
+
+- name: set mysql root password for all root accounts
+  mysql_user: name=root password=root host={{ item }}
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
 
 - name: copy mysql conf
   template: src=mysql.cnf.j2 dest=~/.my.cnf
 
-- name: create posticum database
+- name: delete anonymus MySql server users
+  mysql_user: user="" host={{ item }} state=absent
+  with_items:
+    - "{{ ansible_hostname }}"
+    - localhost
+
+- name: remove the MySQL test database
+  mysql_db: name=test state=absent
+
+- name: create application database
   mysql_db: name=posticum
 
-- name: create posticum user
+- name: create application user
   mysql_user: "name={{ app_user }} password={{ app_password }} priv=posticum.*:ALL"
 
 - name: simlink phpmyadmin conf
