@@ -4,7 +4,7 @@
 
 - Install `apache2` -> restart it
 
-- Install `php5 libapache2-mod-php5 php5-mcrypt php5-mysql`
+- Install `php5 libapache2-mod-php5 php5-mysql`
 
 - Instapp mysql `mysql-server libapache2-mod-auth-mysql php5-mysql`
 
