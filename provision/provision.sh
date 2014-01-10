@@ -25,7 +25,7 @@ install_ansible() {
 }
 
 provision_ansible() {
-    ANSIBLE_FORCE_COLOR="1" ansible-playbook -i localhost, -clocal /vagrant/provision/main.yml
+    ANSIBLE_FORCE_COLOR="1" ansible-playbook -i /vagrant/provision/inventory/staging /vagrant/provision/site.yml
 }
 
 set_insecure_ssh_key() { #ip addr

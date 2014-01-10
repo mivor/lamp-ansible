@@ -1,0 +1,8 @@
+---
+- name: deploy and configure mysql
+  hosts: db
+  sudo: yes
+  gather_facts: false
+  roles:
+    - common
+    - db

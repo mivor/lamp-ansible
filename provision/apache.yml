@@ -1,0 +1,8 @@
+---
+- name: deploy and configure the webserver
+  hosts: web
+  sudo: yes
+  gather_facts: false
+  roles:
+    - common
+    - apache

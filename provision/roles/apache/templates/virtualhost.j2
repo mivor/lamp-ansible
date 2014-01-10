@@ -1,19 +1,19 @@
 <VirtualHost *:80>
     ServerAdmin webmaster@localhost
 
-    DocumentRoot /vagrant
-    <Directory /vagrant>
+    DocumentRoot {{ app_dir }}
+    <Directory {{ app_dir }}>
         Options Indexes FollowSymLinks MultiViews
         AllowOverride All
         Order allow,deny
         allow from all
     </Directory>
 
-    ErrorLog /vagrant/error.log
+    ErrorLog {{ app_dir }}/error.log
 
     # Possible values include: debug, info, notice, warn, error, crit,
     # alert, emerg.
     LogLevel debug
 
-    CustomLog /vagrant/access.log combined
+    CustomLog {{ app_dir }}/access.log combined
 </VirtualHost>

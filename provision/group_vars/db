@@ -1,0 +1,4 @@
+root_user: root
+root_password: root
+app_user: post
+app_password: dev

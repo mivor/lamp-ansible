@@ -1,0 +1,30 @@
+---
+- name: ensure apache2 is at latest version
+  apt: pkg={{ item }} state=latest update_cache=true cache_valid_time=3600
+  with_items:
+    - apache2
+    - php5
+    - libapache2-mod-php5
+    - mysql-server
+    - libapache2-mod-auth-mysql
+    - php5-mysql
+    - phpmyadmin
+    - python-mysqldb
+
+- name: set mysql root password
+  mysql_user: name=root password=root
+
+- name: copy mysql conf
+  template: src=mysql.cnf.j2 dest=~/.my.cnf
+
+- name: create posticum database
+  mysql_db: name=posticum
+
+- name: create posticum user
+  mysql_user: "name={{ app_user }} password={{ app_password }} priv=posticum.*:ALL"
+
+- name: simlink phpmyadmin conf
+  file: src=/etc/phpmyadmin/apache.conf dest=/etc/apache2/conf.d/phpmyadmin state=link
+
+- name: copy phpmyadmin config
+  template: src=phpmyadmin.conf.j2 dest=/etc/phpmyadmin/config.inc.php

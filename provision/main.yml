@@ -4,15 +4,6 @@
   sudo: yes
   gather_facts: false
   tasks:
-    - name: enable color prompt
-      lineinfile: dest=/home/vagrant/.bashrc regexp='#force_color_prompt(.*)$' line='force_color_prompt\1' backrefs=yes
-
-    # - name: set color prompt
-    #   lineinfile: "dest=/home/vagrant/.bashrc regexp='\\u@\\h\\' line='    PS1=\'\[\033[36m\]\u\[\033[00m\]:\[\033[33m\]\w\[\033[00m\]\$ \'' backrefs=yes"
-
-    - name: update distro
-      apt: upgrade=dist update_cache=true cache_valid_time=3600
-
     - name: ensure apache2 is at latest version
       apt: pkg={{ item }} state=latest update_cache=true cache_valid_time=3600
       with_items:

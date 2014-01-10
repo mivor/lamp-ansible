@@ -1,0 +1,12 @@
+---
+- name: fix tty bug
+  lineinfile: "dest=/root/.profile regexp='^mesg n' line='tty -s && mesg n'"
+
+- name: enable color prompt
+  lineinfile: dest=/home/vagrant/.bashrc regexp='#force_color_prompt(.*)$' line='force_color_prompt\1' backrefs=yes
+
+# - name: set color prompt
+#   lineinfile: "dest=/home/vagrant/.bashrc regexp='\\u@\\h\\' line='    PS1=\'\[\033[36m\]\u\[\033[00m\]:\[\033[33m\]\w\[\033[00m\]\$ \'' backrefs=yes"
+
+- name: update distro
+  apt: upgrade=dist update_cache=true cache_valid_time=3600
